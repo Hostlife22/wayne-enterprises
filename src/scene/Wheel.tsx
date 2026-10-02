@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Object3D, Vector2 } from "three";
 import type { InstancedMesh } from "three";
-import type { Vec3 } from "../config";
+import type { Vec3 } from "./types";
 import type { VehicleMaterials } from "./materials";
 import { TIRE_PROFILE, WHEEL_CENTER, brakeRotorGeometry } from "./geometry";
 import { Axle, Fasteners, Panel } from "./Details";

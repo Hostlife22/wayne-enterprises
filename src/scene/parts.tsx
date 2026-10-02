@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { RoundedBox } from "@react-three/drei";
 import { CatmullRomCurve3, Object3D, Vector3 } from "three";
 import type { Material } from "three";
-import type { Vec3 } from "../config";
+import type { Vec3 } from "./types";
 import type { VehicleMaterials } from "./materials";
 
 interface BoxProps {

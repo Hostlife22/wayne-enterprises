@@ -1,12 +1,15 @@
 import { useEffect, useMemo } from "react";
-import type { Finish, Preset } from "../config";
+import type { Finish, Preset } from "../configuration/types";
 import { createMaterials } from "./materials";
 import { Wheel } from "./Wheel";
 import { WHEEL_X } from "./geometry";
 import { Assembly, Mechanism } from "./Motion";
 import { Armor, EquipmentShell, Seat, Tank } from "./Bodywork";
 import { Chassis } from "./Chassis";
-import { Cockpit, RearEquipment, SideEquipment, Turret } from "./Equipment";
+import { Cockpit } from "./equipment/Cockpit";
+import { RearEquipment } from "./equipment/RearEquipment";
+import { SideEquipment } from "./equipment/SideEquipment";
+import { Turret } from "./equipment/Turret";
 
 interface VehicleProps {
   preset: Preset;

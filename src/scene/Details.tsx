@@ -1,9 +1,9 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { dampValue } from "../config";
+import { dampValue } from "./animation/damping";
 import { CatmullRomCurve3, Object3D, Vector3 } from "three";
 import type { Group, InstancedMesh, Material } from "three";
-import type { Vec3 } from "../config";
+import type { Vec3 } from "./types";
 import { panelGeometry } from "./geometry";
 import type { Profile } from "./geometry";
 import { Block } from "./parts";

@@ -62,20 +62,23 @@ Install the browser once with `npx playwright install chromium` (CI uses `--with
 
 ## Architecture
 
-- `src/App.tsx`: application layout, configuration reducer and secondary flows.
-- `src/config.ts`: explicit IDs, preset specifications, reducer, stable assembly targets and delta-aware damping.
-- `src/components/`: shared native dialog and procedural SVG artwork.
-- `src/scene/Vehicle.tsx`: independent animated assemblies and vehicle construction.
+- `src/App.tsx`: composes the showroom and connects configuration, camera controls and a single active overlay.
+- `src/configuration/`: immutable typed preset/finish catalog, selection reducer, equipment descriptions and the React configuration hook. Catalog lookups use explicit IDs; there are no silent fallback selections.
+- `src/showroom/`: header, intro, finish picker, vehicle stage, specification cards, configuration picker, promotions, footer and dialogs. Search and specification formatting are pure functions shared by the UI and tests.
+- `src/components/`: shared native dialog with focus restoration and procedural SVG artwork.
+- `src/scene/Vehicle.tsx`: composes independent animated assemblies.
 - `src/scene/Wheel.tsx`, `parts.tsx`, `Details.tsx`: instanced tires and fasteners, drilled rotors, springs, hoses and suspension links.
 - `src/scene/geometry.ts`: shared panel profiles, broad tire cross-section and perforated rotor geometry.
-- `src/scene/Bodywork.tsx`, `Chassis.tsx`, `Equipment.tsx`: detailed body shells, drivetrain and preset-specific equipment.
-- `src/scene/Motion.tsx`: interruptible assembly and mechanism transforms, including stowing and deployment.
-- `src/scene/materials.ts`: separately owned PBR materials and finish mapping.
-- `src/scene/Viewer.tsx`, `StudioFloor.tsx`: lighting, local environment generation, procedural floor shadows and rendering fallbacks.
-- `src/scene/CameraRig.tsx`: bounded orbit controls, responsive field of view, reset and interruptible tour.
-- `src/hooks.ts`: reduced-motion subscription and WebGL capability check.
-- `src/styles.css`: shared design tokens, component styles and responsive composition.
-- `tests/`: pure calculations and Playwright browser tests; all test code is strict TypeScript.
+- `src/scene/Bodywork.tsx`, `Chassis.tsx`, `equipment/`: body shells, drivetrain, cockpit, rear equipment, side mechanisms and turret.
+- `src/scene/animation/`: pure assembly targets and bounded damping. `Motion.tsx` applies those calculations to Three.js objects.
+- `src/scene/materials.ts`: owned PBR materials and finish mapping.
+- `src/scene/Viewer.tsx`: canvas integration; `StudioLighting.tsx`, `StudioFloor.tsx`, `RenderBoundary.tsx` and `ContextMonitor.tsx` own lighting, floor shadows, render failures and WebGL context loss respectively.
+- `src/scene/CameraRig.tsx`, `camera/home.ts`: orbit controls, responsive framing, stable reset targets and interruptible tour.
+- `src/hooks/`, `platform/`: browser subscriptions, camera UI controls and the WebGL capability check.
+- `src/styles.css`: ordered stylesheet entry point. `src/styles/` separates tokens, shared primitives, layout, header, showroom, viewer, dialogs and responsive rules.
+- `tests/`: strict TypeScript unit tests for configuration, animation, geometry, specification consistency and search; Playwright tests cover browser interaction and fallback behavior.
+
+Dependencies flow from application composition to showroom/scene components to configuration data and pure calculations. ESLint prevents configuration modules from importing rendering/UI code and prevents the scene from importing the showroom. Add a new preset in the catalog, a mechanism in its owning assembly, and UI copy in the showroom; do not duplicate configuration state in components.
 
 Animation values live in Three.js objects and refs. Fixed targets prevent accumulated offsets; long frame deltas are bounded. Rendering is demand-driven, with animation frames requested only while transitions, camera movement the tour, or Combat rotary equipment need them. Pixel ratio is capped at 1.6. Three shared procedural floor gradients provide body and tire contact shadows, avoiding extra full-scene shadow passes while moving with wheelbase changes. Materials and manually constructed armor geometry are disposed, and browser listeners are removed. This is not a measured frame-rate guarantee.
 

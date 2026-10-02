@@ -1,0 +1,31 @@
+:root {
+  font-family: "Barlow", Arial, sans-serif;
+  color: #172126;
+  background: #dfe8eb;
+  font-synthesis: none;
+  --bg: #dfe8eb;
+  --ink: #172126;
+  --muted: #53656d;
+  --orange: #f3632d;
+  --line: #b9c9cf;
+  --surface: #eef4f5;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --micro: 10px;
+  --small: 12px;
+  --body: 14px;
+  --chamfer: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%
+  );
+  --motion: 180ms;
+  --panel-shadow: 0 8px 20px #38505d0b;
+}

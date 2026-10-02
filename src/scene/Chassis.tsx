@@ -1,5 +1,5 @@
 import type { VehicleMaterials } from "./materials";
-import type { Preset } from "../config";
+import type { Preset } from "../configuration/types";
 import {
   Axle,
   Beam,

@@ -1,0 +1,70 @@
+.header {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  gap: 24px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  min-height: 44px;
+  text-align: left;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 4px;
+}
+.brand small {
+  display: block;
+  font-size: 7px;
+  letter-spacing: 2.6px;
+  margin-top: 3px;
+}
+.brand-mark {
+  font-size: 47px;
+  letter-spacing: -9px;
+  line-height: 1;
+  font-weight: 900;
+  transform: skew(-12deg);
+  width: 53px;
+}
+.header nav {
+  display: flex;
+  align-self: stretch;
+  gap: 30px;
+}
+.header nav button {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  position: relative;
+}
+.nav-active:after {
+  content: "";
+  position: absolute;
+  bottom: 15px;
+  left: calc(50% - 8px);
+  width: 16px;
+  height: 2px;
+  background: var(--orange);
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.login {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  min-height: 44px;
+}
+.mini-wing {
+  font-size: 24px;
+  line-height: 15px;
+}

@@ -2,8 +2,10 @@ import { useRef } from "react";
 import type { ReactNode } from "react";
 import { useFrame } from "@react-three/fiber";
 import type { Group } from "three";
-import { assemblyTarget, dampValue } from "../config";
-import type { AssemblyId, Preset, Vec3 } from "../config";
+import { assemblyTarget } from "./animation/assemblyTargets";
+import { dampValue } from "./animation/damping";
+import type { Preset } from "../configuration/types";
+import type { AssemblyId, Vec3 } from "./types";
 
 interface AssemblyProps {
   id: AssemblyId;

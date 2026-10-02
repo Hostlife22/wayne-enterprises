@@ -6,7 +6,7 @@ import {
   PlaneGeometry,
   RGBAFormat,
 } from "three";
-import type { Preset } from "../config";
+import type { Preset } from "../configuration/types";
 import { WHEEL_X } from "./geometry";
 import { Mechanism } from "./Motion";
 

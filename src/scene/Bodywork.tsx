@@ -1,5 +1,5 @@
 import type { VehicleMaterials } from "./materials";
-import type { Vec3 } from "../config";
+import type { Vec3 } from "./types";
 import {
   ARMOR_PROFILE,
   ARMOR_INSET,

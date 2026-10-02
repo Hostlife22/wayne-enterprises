@@ -1,14 +1,10 @@
 import { describe, expect, it } from "vitest";
-import {
-  INITIAL_STATE,
-  PRESETS,
-  assemblyTarget,
-  configReducer,
-  dampValue,
-  HOME_CAMERA,
-  HOME_TARGET,
-} from "../src/config";
-import type { AssemblyId } from "../src/config";
+import { PRESETS } from "../src/configuration/catalog";
+import { INITIAL_STATE, configReducer } from "../src/configuration/reducer";
+import { assemblyTarget } from "../src/scene/animation/assemblyTargets";
+import { dampValue } from "../src/scene/animation/damping";
+import { HOME_CAMERA, HOME_TARGET } from "../src/scene/camera/home";
+import type { AssemblyId } from "../src/scene/types";
 
 const assemblies: AssemblyId[] = [
   "seat",

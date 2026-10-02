@@ -13,4 +13,43 @@ export default tseslint.config(
     plugins: { "react-hooks": hooks },
     rules: hooks.configs.recommended.rules,
   },
+  {
+    files: ["src/configuration/**/*.ts"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: [
+                "**/scene/**",
+                "**/showroom/**",
+                "three",
+                "@react-three/*",
+              ],
+              message:
+                "Configuration data must not depend on rendering or showroom UI.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ["src/scene/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["**/showroom/**", "**/App"],
+              message:
+                "The scene receives data through props; it must not import the showroom.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 );

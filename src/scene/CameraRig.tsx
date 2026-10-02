@@ -3,7 +3,8 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { PerspectiveCamera } from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import { HOME_CAMERA, HOME_TARGET, dampValue } from "../config";
+import { dampValue } from "./animation/damping";
+import { HOME_CAMERA, HOME_TARGET } from "./camera/home";
 
 interface CameraRigProps {
   reset: number;

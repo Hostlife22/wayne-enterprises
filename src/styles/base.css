@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  color: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+button {
+  transition:
+    background var(--motion),
+    box-shadow var(--motion),
+    color var(--motion);
+}
+button:hover {
+  color: #a83c12;
+}
+button:active {
+  filter: brightness(0.92);
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid #b74514;
+  outline-offset: 4px;
+}
+button:disabled {
+  cursor: default;
+}
+svg {
+  flex-shrink: 0;
+}
+h1,
+h2,
+p {
+  margin: 0;
+}
+.icon-button {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.dark-button {
+  background: var(--ink);
+  color: #eef4f5;
+  clip-path: var(--chamfer);
+  min-height: 44px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+.dark-button:hover {
+  background: #354850;
+  color: white;
+}
+.eyebrow {
+  text-transform: uppercase;
+  font-size: var(--micro);
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+.orange {
+  color: var(--orange);
+}
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: white;
+  padding: 15px;
+  z-index: 50;
+  transform: translateY(-150%);
+}
+.skip-link:focus {
+  transform: none;
+}

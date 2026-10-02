@@ -1,13 +1,15 @@
-import { Component, Suspense, useState, useEffect } from "react";
-import type { ErrorInfo, ReactNode } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
-import { Environment, Lightformer, Html } from "@react-three/drei";
-import type { Finish, Preset } from "../config";
-import { HOME_CAMERA } from "../config";
-import { supportsWebGL } from "../hooks";
+import { Suspense, useState, useCallback } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
+import type { Finish, Preset } from "../configuration/types";
+import { HOME_CAMERA } from "./camera/home";
+import { supportsWebGL } from "../platform/webgl";
 import { Vehicle } from "./Vehicle";
 import { StudioFloor } from "./StudioFloor";
 import { CameraRig } from "./CameraRig";
+import { RenderBoundary } from "./RenderBoundary";
+import { ContextMonitor } from "./ContextMonitor";
+import { StudioLighting } from "./StudioLighting";
 
 interface ViewerProps {
   preset: Preset;
@@ -19,48 +21,10 @@ interface ViewerProps {
   stopTour: () => void;
   resetView: () => void;
 }
-interface ContextMonitorProps {
-  onLost: () => void;
-}
-interface BoundaryProps {
-  children: ReactNode;
-}
-interface BoundaryState {
-  failed: boolean;
-}
-
-function ContextMonitor({ onLost }: ContextMonitorProps) {
-  const { gl } = useThree();
-  useEffect(() => {
-    const canvas = gl.domElement;
-    canvas.addEventListener("webglcontextlost", onLost);
-    return () => canvas.removeEventListener("webglcontextlost", onLost);
-  }, [gl, onLost]);
-  return null;
-}
-class RenderBoundary extends Component<BoundaryProps, BoundaryState> {
-  state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-  componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error("Vehicle renderer failed", error, info.componentStack);
-  }
-  render() {
-    return this.state.failed ? (
-      <div className="viewer-fallback" role="alert">
-        The 3D renderer could not start.{" "}
-        <button onClick={() => window.location.reload()}>Reload viewer</button>
-        <p>Specifications and configuration controls remain available below.</p>
-      </div>
-    ) : (
-      this.props.children
-    );
-  }
-}
 export function Viewer(props: ViewerProps) {
   const [available] = useState(supportsWebGL);
   const [lost, setLost] = useState(false);
+  const onContextLost = useCallback(() => setLost(true), []);
   return (
     <div
       className="canvas-wrap"
@@ -84,10 +48,7 @@ export function Viewer(props: ViewerProps) {
             camera={{ position: HOME_CAMERA, fov: 30, near: 0.1, far: 80 }}
             gl={{ antialias: true }}
           >
-            <ContextMonitor onLost={() => setLost(true)} />
-            <ambientLight intensity={0.6} />
-            <directionalLight position={[2, 8, 5]} intensity={3} />
-            <directionalLight position={[-4, 3, -5]} intensity={2} />
+            <ContextMonitor onLost={onContextLost} />
             <Suspense
               fallback={
                 <Html center>
@@ -95,32 +56,13 @@ export function Viewer(props: ViewerProps) {
                 </Html>
               }
             >
-              <Environment resolution={128}>
-                <Lightformer
-                  intensity={2}
-                  position={[0, 3, 6]}
-                  rotation={[0, Math.PI, 0]}
-                  scale={[8, 4, 1]}
-                />
-                <Lightformer
-                  intensity={4}
-                  position={[0, 5, 0]}
-                  rotation={[Math.PI / 2, 0, 0]}
-                  scale={[10, 10, 1]}
-                />
-                <Lightformer
-                  intensity={3}
-                  position={[-5, 2, 3]}
-                  rotation={[0, Math.PI / 2, 0]}
-                  scale={[5, 3, 1]}
-                />
-                <Lightformer
-                  intensity={2}
-                  position={[3, 3, -5]}
-                  scale={[8, 4, 1]}
-                />
-              </Environment>
-              <Vehicle {...props} />
+              <StudioLighting />
+              <Vehicle
+                preset={props.preset}
+                finish={props.finish}
+                exploded={props.exploded}
+                reduced={props.reduced}
+              />
               <StudioFloor preset={props.preset} reduced={props.reduced} />
             </Suspense>
             <CameraRig

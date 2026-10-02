@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { DoubleSide, Mesh, MeshBasicMaterial, Raycaster, Vector3 } from "three";
-import { PRESETS, dampValue, equipmentSummary } from "../src/config";
+import { PRESETS } from "../src/configuration/catalog";
+import { equipmentSummary } from "../src/configuration/equipmentSummary";
+import { dampValue } from "../src/scene/animation/damping";
 import {
   ARMOR_PROFILE,
   EQUIPMENT_PROFILE,

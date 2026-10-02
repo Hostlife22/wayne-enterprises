@@ -1,5 +1,5 @@
 import { MeshStandardMaterial } from "three";
-import type { Finish } from "../config";
+import type { Finish } from "../configuration/types";
 
 export type VehicleMaterials = ReturnType<typeof createMaterials>;
 

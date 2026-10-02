@@ -1,0 +1,82 @@
+.detail-dialog {
+  color: var(--ink);
+  background: #e9f0f2;
+  border: 1px solid #a8bdc6;
+  width: min(580px, calc(100% - 32px));
+  padding: 28px;
+  box-shadow: 0 30px 100px #0f202b66;
+}
+.detail-dialog::backdrop {
+  background: #10232b88;
+  backdrop-filter: blur(5px);
+}
+.dialog-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+.dialog-top .eyebrow {
+  font-size: 8px;
+}
+.detail-dialog h2 {
+  font-size: 30px;
+  font-weight: 800;
+  margin: 20px 0;
+}
+.detail-dialog > p {
+  line-height: 1.8;
+  font-size: 16px;
+  color: #425962;
+}
+.detail-note {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 11px;
+  line-height: 1.8;
+  background: #d8e3e7;
+  padding: 16px;
+  margin-top: 24px;
+}
+.dialog-footer {
+  margin-top: 28px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 8px;
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.search-label {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 10px;
+}
+.detail-dialog input {
+  padding: 14px;
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #f6f9fa;
+  font-size: 16px;
+}
+.search-results {
+  max-height: 330px;
+  overflow: auto;
+  margin-top: 14px;
+}
+.search-results button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  padding: 14px 8px;
+  border-bottom: 1px solid var(--line);
+  width: 100%;
+}
+.search-results small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+}

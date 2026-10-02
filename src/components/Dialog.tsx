@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import type { ReactNode } from "react";
 import { X } from "lucide-react";
 
@@ -9,6 +9,7 @@ interface DialogProps {
 }
 
 export function Dialog({ title, children, onClose }: DialogProps) {
+  const titleId = useId();
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const previous = document.activeElement;
@@ -19,13 +20,22 @@ export function Dialog({ title, children, onClose }: DialogProps) {
       if (previous instanceof HTMLElement) previous.focus();
     };
   }, []);
+  useEffect(() => {
+    ref.current?.querySelector<HTMLButtonElement>("button")?.focus();
+  }, [title]);
   return (
     <dialog
       ref={ref}
       className="detail-dialog"
-      aria-labelledby="dialog-title"
+      aria-labelledby={titleId}
       onCancel={onClose}
       onKeyDown={(event) => {
+        // Search inputs otherwise consume Escape to clear their text first.
+        if (event.key === "Escape") {
+          event.preventDefault();
+          onClose();
+          return;
+        }
         if (event.key !== "Tab") return;
         const controls = Array.from(
           event.currentTarget.querySelectorAll<HTMLElement>(
@@ -56,7 +66,7 @@ export function Dialog({ title, children, onClose }: DialogProps) {
           <X size={20} />
         </button>
       </div>
-      <h2 id="dialog-title">{title}</h2>
+      <h2 id={titleId}>{title}</h2>
       {children}
       <div className="dialog-footer">
         RESEARCH DIVISION <span>GOTHAM CITY · EST. 1870</span>
