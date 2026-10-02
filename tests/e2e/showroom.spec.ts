@@ -94,5 +94,40 @@ test("WebGL unavailable retains usable configuration", async ({ page }) => {
   await page
     .getByRole("button", { name: "Combat Mode Maximum protection" })
     .click();
-  await expect(page.locator(".specs")).toContainText("720");
+  await expect(page.locator(".specs")).toContainText("690");
+});
+
+test("mission profiles change the rendered vehicle and restore the standard equipment", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("");
+  await expect(page.locator("canvas")).toBeVisible();
+  await page.waitForTimeout(1500);
+  const standard = await page.locator("canvas").screenshot();
+  await page
+    .getByRole("button", { name: "Tactical Mode Always prepared" })
+    .click();
+  await expect(page.locator(".mode-detail")).toContainText("Stabilizers down");
+  const tactical = await page.locator("canvas").screenshot();
+  expect(tactical.equals(standard)).toBe(false);
+  await page
+    .getByRole("button", { name: "Pursuit Mode Uncompromising pace" })
+    .click();
+  await expect(page.locator(".mode-detail")).toContainText("Spoiler raised");
+  await expect(page.locator(".mode-detail")).not.toContainText(
+    "Stabilizers down",
+  );
+  const pursuit = await page.locator("canvas").screenshot();
+  expect(pursuit.equals(tactical)).toBe(false);
+  await page
+    .getByRole("button", { name: "Combat Mode Maximum protection" })
+    .click();
+  await expect(page.locator(".mode-detail")).toContainText("Turret deployed");
+  await expect(page.locator(".specs")).toContainText("690");
+  const combat = await page.locator("canvas").screenshot();
+  expect(combat.equals(pursuit)).toBe(false);
+  await page.getByRole("button", { name: "Standard Pure engineering" }).click();
+  await expect(page.locator(".mode-detail")).toHaveText("Equipment stowed");
+  await expect(page.locator(".specs")).toContainText("600");
 });

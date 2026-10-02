@@ -49,7 +49,7 @@ export function BikeDrawing({
           <>
             <path d="M24 12H278M24 7V18M278 7V18M14 34V117M9 34H19M9 117H19" />
             <text x="125" y="9" stroke="none" fill="currentColor" fontSize="7">
-              3,820 mm
+              2,600 mm
             </text>
             <path d="M30 121H279" />
           </>

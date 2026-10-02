@@ -15,7 +15,13 @@ import {
   Weight,
   X,
 } from "lucide-react";
-import { FINISHES, INITIAL_STATE, PRESETS, configReducer } from "./config";
+import {
+  FINISHES,
+  INITIAL_STATE,
+  PRESETS,
+  configReducer,
+  equipmentSummary,
+} from "./config";
 import { useReducedMotion } from "./hooks";
 import { Viewer } from "./scene/Viewer";
 import { Dialog } from "./components/Dialog";
@@ -316,20 +322,23 @@ export default function App() {
             )}
             <div className="vehicle-status" aria-live="polite">
               <span>
-                <i /> RIDE HEIGHT{" "}
-                <b>{Math.round(145 + preset.height * 100)} MM</b>
+                <i /> RIDE HEIGHT <b>{preset.rideHeightMm} MM</b>
               </span>
               <span>
-                DASHBOARD <b>{preset.dashboard > 1 ? "WIDE" : "COMPACT"}</b>
+                DASHBOARD{" "}
+                <b>{preset.dashboard < 1 ? "COMPACT" : "FULL WIDTH"}</b>
               </span>
               <span>
                 EQUIPMENT{" "}
-                <b>{preset.equipment > 0.2 ? "DEPLOYED" : "STOWED"}</b>
+                <b>{preset.features.cannons ? "DEPLOYED" : "STOWED"}</b>
               </span>
               <span>
                 ASSEMBLY: <b>{state.exploded ? "EXPLODED" : "ASSEMBLED"}</b>
               </span>
             </div>
+            <p className="mode-detail" aria-live="polite">
+              {equipmentSummary(preset).join(" · ")}
+            </p>
           </section>
           <aside className="specs" aria-label="Vehicle specifications">
             {specifications.map(
@@ -399,14 +408,20 @@ export default function App() {
               role="group"
               aria-label="Choose configuration"
             >
-              {PRESETS.map((p, i) => (
+              {PRESETS.map((p) => (
                 <button
                   key={p.id}
                   className={`preset ${!state.exploded && state.preset === p.id ? "active" : ""}`}
                   aria-pressed={!state.exploded && state.preset === p.id}
                   onClick={() => dispatch({ type: "preset", id: p.id })}
                 >
-                  <BikeDrawing variant={i} />
+                  <img
+                    className="bike-thumbnail"
+                    src={`${import.meta.env.BASE_URL}thumbnails/${p.id}.png`}
+                    alt=""
+                    width="600"
+                    height="280"
+                  />
                   <strong>{p.name}</strong>
                   <span>{p.subtitle}</span>
                 </button>

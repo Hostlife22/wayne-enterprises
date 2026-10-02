@@ -1,16 +1,12 @@
 import { Component, Suspense, useState, useEffect } from "react";
 import type { ErrorInfo, ReactNode } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
-import {
-  ContactShadows,
-  Environment,
-  Lightformer,
-  Html,
-} from "@react-three/drei";
+import { Environment, Lightformer, Html } from "@react-three/drei";
 import type { Finish, Preset } from "../config";
 import { HOME_CAMERA } from "../config";
 import { supportsWebGL } from "../hooks";
 import { Vehicle } from "./Vehicle";
+import { StudioFloor } from "./StudioFloor";
 import { CameraRig } from "./CameraRig";
 
 interface ViewerProps {
@@ -83,7 +79,6 @@ export function Viewer(props: ViewerProps) {
       ) : (
         <RenderBoundary>
           <Canvas
-            shadows
             frameloop="demand"
             dpr={[1, 1.6]}
             camera={{ position: HOME_CAMERA, fov: 30, near: 0.1, far: 80 }}
@@ -91,16 +86,7 @@ export function Viewer(props: ViewerProps) {
           >
             <ContextMonitor onLost={() => setLost(true)} />
             <ambientLight intensity={0.6} />
-            <directionalLight
-              position={[2, 8, 5]}
-              intensity={3}
-              castShadow
-              shadow-mapSize={[1024, 1024]}
-              shadow-camera-left={-7}
-              shadow-camera-right={7}
-              shadow-camera-top={7}
-              shadow-camera-bottom={-7}
-            />
+            <directionalLight position={[2, 8, 5]} intensity={3} />
             <directionalLight position={[-4, 3, -5]} intensity={2} />
             <Suspense
               fallback={
@@ -135,18 +121,11 @@ export function Viewer(props: ViewerProps) {
                 />
               </Environment>
               <Vehicle {...props} />
-              <ContactShadows
-                position={[0, -0.015, 0]}
-                opacity={0.5}
-                scale={15}
-                blur={2.5}
-                far={4}
-                resolution={256}
-                frames={Infinity}
-              />
+              <StudioFloor preset={props.preset} reduced={props.reduced} />
             </Suspense>
             <CameraRig
               reset={props.reset}
+              exploded={props.exploded}
               tour={props.tour}
               reduced={props.reduced}
               stopTour={props.stopTour}

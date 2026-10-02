@@ -6,12 +6,12 @@ A fictional engineering showroom built with Vite, React, strict TypeScript, Thre
 
 ## Experience
 
-- Oversized treaded tires, rims, brake discs, suspension springs, drivetrain, frame struts, armor, cockpit and equipment modules.
+- Broad crown tires with instanced tread and sidewall blocks, perforated brake rotors, bolted hubs, boxed swingarms, suspension springs, hoses, cylinder housings, layered armor, digital cockpit and equipment modules.
 - Three PBR armor finishes and four typed configuration presets.
 - Smooth, interruptible assembly separation in Custom Build.
 - Camera inspection, reset and a stoppable cinematic orbit.
 - Specification dialogs, configuration search, demo login information and editorial panels.
-- Responsive layout, locally packaged fonts, procedural SVG diagrams and thumbnails.
+- Responsive layout, locally packaged fonts, procedural SVG diagrams and static thumbnails rendered from the actual vehicle.
 
 All performance figures are fictional. Standard uses 2.8 s acceleration, 320 km/h top speed, 280 km stealth range and 600 kg mass. This independent design study is not affiliated with DC, Warner Bros. or any real vehicle manufacturer.
 
@@ -66,21 +66,36 @@ Install the browser once with `npx playwright install chromium` (CI uses `--with
 - `src/config.ts`: explicit IDs, preset specifications, reducer, stable assembly targets and delta-aware damping.
 - `src/components/`: shared native dialog and procedural SVG artwork.
 - `src/scene/Vehicle.tsx`: independent animated assemblies and vehicle construction.
-- `src/scene/parts.tsx`: reusable wheels, instanced tread/bolts, spring and structural geometry.
+- `src/scene/Wheel.tsx`, `parts.tsx`, `Details.tsx`: instanced tires and fasteners, drilled rotors, springs, hoses and suspension links.
+- `src/scene/geometry.ts`: shared panel profiles, broad tire cross-section and perforated rotor geometry.
+- `src/scene/Bodywork.tsx`, `Chassis.tsx`, `Equipment.tsx`: detailed body shells, drivetrain and preset-specific equipment.
+- `src/scene/Motion.tsx`: interruptible assembly and mechanism transforms, including stowing and deployment.
 - `src/scene/materials.ts`: separately owned PBR materials and finish mapping.
-- `src/scene/Viewer.tsx`: lighting, local environment generation, shadows and rendering fallbacks.
+- `src/scene/Viewer.tsx`, `StudioFloor.tsx`: lighting, local environment generation, procedural floor shadows and rendering fallbacks.
 - `src/scene/CameraRig.tsx`: bounded orbit controls, responsive field of view, reset and interruptible tour.
 - `src/hooks.ts`: reduced-motion subscription and WebGL capability check.
 - `src/styles.css`: shared design tokens, component styles and responsive composition.
 - `tests/`: pure calculations and Playwright browser tests; all test code is strict TypeScript.
 
-Animation values live in Three.js objects and refs. Fixed targets prevent accumulated offsets; long frame deltas are bounded. Rendering is demand-driven, with animation frames requested only while transitions, camera movement or the tour need them. Pixel ratio is capped at 1.6; shadow maps are 1024² and contact shadows 256². Materials and manually constructed armor geometry are disposed, and browser listeners are removed. This is not a measured frame-rate guarantee.
+Animation values live in Three.js objects and refs. Fixed targets prevent accumulated offsets; long frame deltas are bounded. Rendering is demand-driven, with animation frames requested only while transitions, camera movement the tour, or Combat rotary equipment need them. Pixel ratio is capped at 1.6. Three shared procedural floor gradients provide body and tire contact shadows, avoiding extra full-scene shadow passes while moving with wheelbase changes. Materials and manually constructed armor geometry are disposed, and browser listeners are removed. This is not a measured frame-rate guarantee.
 
 ## Reference and limitations
 
-The supplied 54-second local video was sampled at six-second intervals before implementation. The layout follows its pale studio, technical drawing, left editorial stack, right specification cards and lower configuration rail. Assembled and exploded screenshots were visually reviewed against those frames.
+The supplied 54-second local video was reviewed across its entire timeline at two-second intervals, with full-resolution inspections of the stable presets and assembly transitions. The layout follows its pale studio, technical drawing, left editorial stack, right specification cards and lower configuration rail. Assembled and exploded screenshots were visually reviewed against those frames.
 
-The vehicle is an original procedural interpretation with simplified mechanical construction. SVG thumbnails are schematic illustrations, rather than exact renders of each configuration. The film is an in-app orbit, with no prerecorded media or audio. Authentication, purchases and saved accounts are not implemented. The WebGL dependency bundle is substantial; lower-powered devices may need more time to initialize. Only Chromium is automated; Safari, Firefox and physical touch devices need further verification. See [ACCESSIBILITY.md](ACCESSIBILITY.md).
+The vehicle is an original procedural interpretation with simplified mechanical construction. Preset thumbnails are static renders of the procedural model; they do not run additional WebGL canvases. The film is an in-app orbit, with no prerecorded media or audio. Authentication, purchases and saved accounts are not implemented. The WebGL dependency bundle is substantial; lower-powered devices may need more time to initialize. Only Chromium is automated; Safari, Firefox and physical touch devices need further verification. See [ACCESSIBILITY.md](ACCESSIBILITY.md).
+
+### Preset differences observed in the reference
+
+| Approximate video interval | Preset       | Implemented mechanical changes                                                                                                 |
+| -------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| 00–06 s; 50–54 s           | Standard     | Neutral ride height, full cockpit, folded supports, retracted mission equipment                                                |
+| 06–12 s                    | Tactical     | Raised suspension, lowered stabilizers, raised rear grapple, illuminated headlights                                            |
+| 12–24 s                    | Pursuit      | Lower chassis, extended wheelbase, compact cockpit, rear-set foot controls, raised spoiler, extended illuminated aft thrusters |
+| 24–38 s                    | Combat       | Extended rotary assemblies, open launcher panels, raised turret and rear missile pod; full cockpit                             |
+| 38–50 s                    | Custom Build | Seat, cockpit and tank lift; opposite armor and equipment shells move outward; wheels retain their relationship to the chassis |
+
+The typed preset data controls both visible equipment and HTML status descriptions. Combat uses the reference's 300 km/h, 250 km and 690 kg figures; Standard retains the requested baseline. Reference dimensions and specifications remain fictional. The model is an original procedural reconstruction, not the source asset or an exact geometric reproduction. Camera framing widens smoothly for the exploded assembly without resetting its orientation; manual input interrupts automatic framing.
 
 ## GitHub Pages
 

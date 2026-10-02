@@ -17,6 +17,7 @@ const assemblies: AssemblyId[] = [
   "rightArmor",
   "equipment",
   "chassis",
+  "tank",
 ];
 describe("configuration", () => {
   it("uses the specified standard baseline", () => {

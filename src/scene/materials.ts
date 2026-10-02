@@ -10,8 +10,33 @@ export function createMaterials(finish: Finish) {
       metalness: finish.metalness,
       roughness: finish.roughness,
     }),
+    edge: new MeshStandardMaterial({
+      color: finish.color,
+      metalness: 0.6,
+      roughness: 0.38,
+    }),
+    frame: new MeshStandardMaterial({
+      color: "#33383e",
+      metalness: 0.65,
+      roughness: 0.42,
+    }),
+    rotor: new MeshStandardMaterial({
+      color: "#576069",
+      metalness: 0.8,
+      roughness: 0.43,
+    }),
+    tread: new MeshStandardMaterial({
+      color: "#292c2f",
+      roughness: 0.94,
+      metalness: 0,
+    }),
+    badge: new MeshStandardMaterial({
+      color: finish.id === "silver" ? "#20272d" : "#657078",
+      metalness: 0.65,
+      roughness: 0.5,
+    }),
     rubber: new MeshStandardMaterial({
-      color: "#111618",
+      color: "#222528",
       roughness: 0.91,
       metalness: 0.05,
     }),
@@ -22,8 +47,8 @@ export function createMaterials(finish: Finish) {
     }),
     dark: new MeshStandardMaterial({
       color: "#272d31",
-      metalness: 0.8,
-      roughness: 0.4,
+      metalness: 0.55,
+      roughness: 0.48,
     }),
     seat: new MeshStandardMaterial({ color: "#15191b", roughness: 0.96 }),
     orange: new MeshStandardMaterial({
@@ -31,10 +56,15 @@ export function createMaterials(finish: Finish) {
       emissive: "#fa4e0b",
       emissiveIntensity: 0.4,
     }),
+    display: new MeshStandardMaterial({
+      color: "#102c32",
+      metalness: 0.35,
+      roughness: 0.25,
+    }),
     screen: new MeshStandardMaterial({
-      color: "#83c4d6",
+      color: "#b9d9df",
       emissive: "#5ba6bf",
-      emissiveIntensity: 0.8,
+      emissiveIntensity: 0.4,
       metalness: 0.5,
       roughness: 0.2,
     }),

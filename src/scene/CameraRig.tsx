@@ -7,20 +7,27 @@ import { HOME_CAMERA, HOME_TARGET, dampValue } from "../config";
 
 interface CameraRigProps {
   reset: number;
+  exploded: boolean;
   tour: boolean;
   reduced: boolean;
   stopTour: () => void;
 }
 
-export function CameraRig({ reset, tour, reduced, stopTour }: CameraRigProps) {
+export function CameraRig({
+  reset,
+  tour,
+  reduced,
+  stopTour,
+  exploded,
+}: CameraRigProps) {
   const { camera, size, invalidate } = useThree();
+  const targetFov =
+    (size.width / size.height < 1.5 ? 43 : 24) + (exploded ? 7 : 0);
+  const framing = useRef(true);
   useEffect(() => {
-    if (camera instanceof PerspectiveCamera) {
-      camera.fov = size.width / size.height < 1.5 ? 39 : 30;
-      camera.updateProjectionMatrix();
-      invalidate();
-    }
-  }, [camera, size.width, size.height, invalidate]);
+    framing.current = true;
+    invalidate();
+  }, [targetFov, reset, invalidate]);
   const controls = useRef<OrbitControlsImpl>(null);
   const resetting = useRef(false);
   const angle = useRef(0);
@@ -36,6 +43,12 @@ export function CameraRig({ reset, tour, reduced, stopTour }: CameraRigProps) {
     }
   }, [tour]);
   useFrame((_, dt) => {
+    if (camera instanceof PerspectiveCamera && framing.current) {
+      camera.fov = dampValue(camera.fov, targetFov, dt, reduced);
+      camera.updateProjectionMatrix();
+      if (Math.abs(camera.fov - targetFov) > 0.01) invalidate();
+      else framing.current = false;
+    }
     const c = controls.current;
     if (!c) return;
     const p = c.object.position;
@@ -88,6 +101,7 @@ export function CameraRig({ reset, tour, reduced, stopTour }: CameraRigProps) {
       maxPolarAngle={Math.PI / 2 - 0.04}
       onStart={() => {
         resetting.current = false;
+        framing.current = false;
         stopTour();
       }}
     />
