@@ -1,6 +1,8 @@
 import { MeshStandardMaterial } from "three";
 import type { Finish } from "../config";
 
+export type VehicleMaterials = ReturnType<typeof createMaterials>;
+
 export function createMaterials(finish: Finish) {
   return {
     armor: new MeshStandardMaterial({
@@ -38,4 +40,3 @@ export function createMaterials(finish: Finish) {
     }),
   };
 }
-export type VehicleMaterials = ReturnType<typeof createMaterials>;
