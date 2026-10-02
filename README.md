@@ -24,7 +24,7 @@ npm ci
 npm run dev
 ```
 
-Open `http://localhost:5173/test-form/`.
+Open `http://localhost:5173/wayne-enterprises/`.
 
 ## Controls
 
@@ -84,7 +84,7 @@ The vehicle is an original procedural interpretation with simplified mechanical 
 
 ## GitHub Pages
 
-The detected production branch is `main`, and Vite's base is `/test-form/` for `Hostlife22/test-form`.
+The detected production branch is `main`, and Vite's base is `/wayne-enterprises/` for `Hostlife22/wayne-enterprises`.
 
 1. In **Settings → Pages → Build and deployment**, select **GitHub Actions**.
 2. Allow Actions to run. The `github-pages` environment must permit deployments from `main`; configure required reviewers there if desired.
@@ -92,7 +92,7 @@ The detected production branch is `main`, and Vite's base is `/test-form/` for `
 
 Pull requests run `npm ci`, all checks and Chromium smoke tests. Production deployment depends on the same successful checks. All actions are pinned to full revisions; only the deployment job receives Pages write and OIDC permissions. No repository secret is required. A post-deploy HTTP check verifies the page title. For a renamed repository, update `base` in `vite.config.ts` and the test URLs. For a branch rename, update both the workflow branch filter and deployment conditions.
 
-Expected site: https://hostlife22.github.io/test-form/. Deployment status must be checked in Actions and the live site verified before treating it as published.
+Expected site: https://hostlife22.github.io/wayne-enterprises/. Deployment status must be checked in Actions and the live site verified before treating it as published.
 
 ## Repository metadata
 

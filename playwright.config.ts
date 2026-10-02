@@ -6,13 +6,13 @@ export default defineConfig({
   workers: 1,
   timeout: 90000,
   use: {
-    baseURL: "http://127.0.0.1:4173/test-form/",
+    baseURL: "http://127.0.0.1:4173/wayne-enterprises/",
     viewport: { width: 1440, height: 900 },
     trace: "retain-on-failure",
   },
   webServer: {
     command: "npm run dev -- --port 4173",
-    url: "http://127.0.0.1:4173/test-form/",
+    url: "http://127.0.0.1:4173/wayne-enterprises/",
     reuseExistingServer: !process.env.CI,
   },
   projects: [{ name: "chromium", use: { browserName: "chromium" } }],
